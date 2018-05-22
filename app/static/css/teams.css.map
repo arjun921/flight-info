@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAIE,qBAAI;EACF,aAAa,EAAE,iBAAwB;ECEzC,aAAa,EDDY,YAAY;ECErC,kBAAkB,EDFO,YAAY;ECGrC,qBAAqB,EDHI,YAAY;AAGrC,0BAAS;EACP,OAAO,EAAE,CAAC;EAEV,mCAAS;IACP,OAAO,EAAE,IAAI;;AAMjB,qBAAI;ECZJ,aAAa,EDaY,eAAe;ECZxC,kBAAkB,EDYO,eAAe;ECXxC,qBAAqB,EDWI,eAAe;;AAKxC,qBAAI;EClBJ,aAAa,EDmBY,eAAe;EClBxC,kBAAkB,EDkBO,eAAe;ECjBxC,qBAAqB,EDiBI,eAAe;ECPzC,kBAAkB,EAkCN,4DAAoF;EAjChG,eAAe,EAiCH,4DAAoF;EAhChG,UAAU,EAgCE,4DAAoF",
-"sources": ["../scss/teams.scss","../scss/mixins.scss"],
-"names": [],
-"file": "teams.css"
-}
