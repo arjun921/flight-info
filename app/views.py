@@ -88,6 +88,7 @@ def findEnrouteFlights():
         browser.execute_script("document.getElementById('r_En_Route').parentNode.parentNode.children[1].children[0].click()")
     except Exception as e:
         data = {"enroute":["No Enroute Flights"]}
+        print(data)
         return json.dumps(data)
 
     resultsSoup = BeautifulSoup(browser.find_element_by_id('Results').get_attribute('innerHTML'), 'html.parser')
@@ -104,4 +105,5 @@ def findEnrouteFlights():
     data = {
         "enroute" : enrouteflights
     }
+    print(data)
     return json.dumps(data)
