@@ -71,3 +71,37 @@ def webhook(flightID):
     arrival['status'] = arrivalDelay.title()
     summary['arrival'] = arrival
     return json.dumps(summary)
+
+
+@app.route('/enroute')
+def findEnrouteFlights():
+    global browser
+    enrouteflights = []
+    origin= request.args.get('origin')
+    destination= request.args.get('destination')
+    link = 'https://uk.flightaware.com/live/findflight?origin={}&destination={}'.format(origin,destination)
+    print(link)
+    browser.get(link)
+    browser.set_window_size(height=1009,width=1617)
+    try:
+        browser.find_element_by_id('r_En_Route')
+        browser.execute_script("document.getElementById('r_En_Route').parentNode.parentNode.children[1].children[0].click()")
+    except Exception as e:
+        data = {"enroute":["No Enroute Flights"]}
+        return json.dumps(data)
+
+    resultsSoup = BeautifulSoup(browser.find_element_by_id('Results').get_attribute('innerHTML'), 'html.parser')
+    for x in resultsSoup.findAll('tr',{'style':''})[1:-1]:
+        flight = {
+            "flightName" : x.findAll('td')[0].findAll('span')[0].text,
+            "flightID" : x.findAll('td')[1].findAll('a')[0].text,
+            "aircraft" : x.findAll('td')[2].text.strip(),
+            "status" : x.findAll('td')[3].text.strip(),
+            "departs" : (x.findAll('td')[4].text.strip().encode('ascii', 'ignore')).decode("utf-8"),
+            "arrives" : (x.findAll('td')[6].text.strip().encode('ascii', 'ignore')).decode("utf-8"),
+        }
+        enrouteflights.append(flight)
+    data = {
+        "enroute" : enrouteflights
+    }
+    return json.dumps(data)
