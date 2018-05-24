@@ -92,16 +92,17 @@ def findEnrouteFlights():
         return json.dumps(data)
 
     resultsSoup = BeautifulSoup(browser.find_element_by_id('Results').get_attribute('innerHTML'), 'html.parser')
-    for x in resultsSoup.findAll('tr',{'style':''})[1:-1]:
-        flight = {
-            "flightName" : x.findAll('td')[0].findAll('span')[0].text,
-            "flightID" : x.findAll('td')[1].findAll('a')[0].text,
-            "aircraft" : x.findAll('td')[2].text.strip(),
-            "status" : x.findAll('td')[3].text.strip(),
-            "departs" : (x.findAll('td')[4].text.strip().encode('ascii', 'ignore')).decode("utf-8"),
-            "arrives" : (x.findAll('td')[6].text.strip().encode('ascii', 'ignore')).decode("utf-8"),
-        }
-        enrouteflights.append(flight)
+    for x in resultsSoup.findAll('tr',{'style':''})[1:]:
+        if str(x) not in ['<tr class=""></tr>','<tr class="alternateRow"></tr>']:
+            flight = {
+                "flightName" : x.findAll('td')[0].findAll('span')[0].text,
+                "flightID" : x.findAll('td')[1].findAll('a')[0].text,
+                "aircraft" : x.findAll('td')[2].text.strip(),
+                "status" : x.findAll('td')[3].text.strip(),
+                "departs" : (x.findAll('td')[4].text.strip().encode('ascii', 'ignore')).decode("utf-8"),
+                "arrives" : (x.findAll('td')[6].text.strip().encode('ascii', 'ignore')).decode("utf-8"),
+            }
+            enrouteflights.append(flight)
     data = {
         "enroute" : enrouteflights
     }
