@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import *
 import os
 from app import app
 from selenium import webdriver
